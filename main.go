@@ -1,4 +1,4 @@
-package main
+package ginq
 
 type collection[item comparable] struct {
 	items []item
