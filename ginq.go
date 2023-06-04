@@ -4,8 +4,8 @@ const (
 	collectionIsEmpty = "collection is empty"
 )
 
-type collection[item comparable] struct {
-	items []item
+type collection[Item comparable] struct {
+	items []Item
 }
 
 func From[T comparable](items []T) collection[T] {
@@ -84,6 +84,15 @@ func (c collection[T]) LastWith(condition func(T) bool) T {
 	}
 
 	return _default[T]()
+}
+
+func (c collection[T]) Map(selector func(T) any) collection[any] {
+	mapped := make([]any, 0)
+	for _, item := range c.items {
+		mapped = append(mapped, selector(item))
+	}
+
+	return collection[any]{items: mapped}
 }
 
 func (c collection[T]) Select() []T {
